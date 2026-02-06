@@ -163,12 +163,13 @@ jobs:
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' }}
 
       - name: Build Docker image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: .
           push: false
           load: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: local-scan:latest
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -176,7 +177,7 @@ jobs:
       - name: Run Trivy Container Scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          image-ref: 'local-scan:latest'
           format: 'sarif'
           output: 'trivy-container-results.sarif'
           severity: 'CRITICAL,HIGH'
