@@ -11,7 +11,8 @@ resource "aws_ecs_cluster" "main" {
 
   configuration {
     execute_command_configuration {
-      logging = "OVERRIDE"
+      kms_key_id = aws_kms_key.logs.arn
+      logging    = "OVERRIDE"
 
       log_configuration {
         cloud_watch_encryption_enabled = true
