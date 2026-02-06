@@ -1,0 +1,51 @@
+# .gitignore for GitHub DevSecOps Demo
+
+# Build outputs
+target/
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+*.pem
+*.key
+
+# Test outputs
+test-results/
+coverage/
+
+# Docker
+*.tar

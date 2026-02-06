@@ -1,0 +1,17 @@
+# Default owners for everything
+* @security-team
+
+# Java source code
+/src/ @dev-team @security-team
+
+# Infrastructure
+/infrastructure/ @platform-team @security-team
+
+# CI/CD workflows
+/.github/ @devops-team @security-team
+
+# Security configurations
+/.github/workflows/devsecops-pipeline.yml @security-team
+
+# Docker configuration
+/Dockerfile @platform-team @security-team
