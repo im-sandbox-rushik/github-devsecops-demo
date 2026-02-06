@@ -2,18 +2,16 @@
 FROM eclipse-temurin:17-jdk-alpine AS build
 WORKDIR /app
 
-# Copy Maven wrapper and pom.xml
-COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw .
-RUN chmod +x mvnw
+# Install Maven
+RUN apk add --no-cache maven
 
-# Download dependencies (cached layer)
-RUN ./mvnw dependency:go-offline -B
+# Copy pom.xml and download dependencies (cached layer)
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
 # Copy source and build
 COPY src ./src
-RUN ./mvnw clean package -DskipTests -B
+RUN mvn clean package -DskipTests -B
 
 # Runtime stage - using distroless for security
 FROM eclipse-temurin:17-jre-alpine
