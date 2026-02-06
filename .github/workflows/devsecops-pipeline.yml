@@ -116,8 +116,15 @@ jobs:
           mvn org.owasp:dependency-check-maven:check \
             -DfailBuildOnCVSS=11 \
             -Dformats=HTML,JSON,SARIF \
-            -DprettyPrint=true
-        continue-on-error: true
+            -DprettyPrint=true || true
+
+      - name: List Dependency Check Output
+        run: |
+          echo "=== Listing target directory ==="
+          ls -la target/ || echo "No target directory"
+          echo "=== Looking for SARIF files ==="
+          find . -name "*.sarif" -type f 2>/dev/null || echo "No SARIF files found"
+        if: always()
 
       - name: Upload Dependency Check Report
         uses: actions/upload-artifact@v4
@@ -130,7 +137,8 @@ jobs:
       - name: Upload SARIF to GitHub Security
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: target/dependency-check-report.sarif
+          sarif_file: target/
+          category: dependency-check
         if: always()
         continue-on-error: true
 
